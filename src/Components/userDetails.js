@@ -48,14 +48,7 @@ export default function UserForm() {
     return (
         <div style={{ display: "flex", backgroundColor: "#FAFAFA" }}>
             {/* Left Side */}
-            <div style={{ display: "flex", height: "100vh", width: "40%" }}>
-                <div style={{
-                    margin: "20px",
-                    borderRadius: "12px",
-                    background: "linear-gradient(to left, #EEE9E0, #ECEEF2)",
-                    backdropFilter: "blur(32px)",
-                    height: "96vh"
-                }}>
+
                     <div style={{ display: "flex", height: "100vh", width: "40%" }}>
                 <div style={{
                     margin: "20px",
@@ -77,8 +70,6 @@ export default function UserForm() {
                 </div>
             </div>
                     {/* ... (existing left side content) */}
-                </div>
-            </div>
 
             {/* Right Side */}
             <div style={{ width: "60%" }}>
