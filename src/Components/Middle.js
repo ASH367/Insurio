@@ -42,7 +42,7 @@ const Middle = ({formData}) => {
 
       // Directly call marketplace API for recommendations
       const response = await axios.post(
-        "http://localhost:8000/marketplace-plans",
+        "https://insurance-backend-yuoj.onrender.com/marketplace-plans",
         payload
       );
 
@@ -104,7 +104,7 @@ const Middle = ({formData}) => {
         }
       };
   
-      const res = await axios.post("http://localhost:8000/chat-with-ai", payload);
+      const res = await axios.post("https://insurance-backend-yuoj.onrender.com/chat-with-ai", payload);
   
       const botReply = res.data.reply || "No response received.";
       const refined = <ReactMarkdown>{botReply}</ReactMarkdown>;
