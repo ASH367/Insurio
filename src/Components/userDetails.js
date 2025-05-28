@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Frame5 from "../Images/Frame5.png";
-
+import Left from './Left';
+import { color } from 'framer-motion';
+import App from './App.css'
 export default function UserForm() {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -16,9 +18,20 @@ export default function UserForm() {
 
     const [errors, setErrors] = useState({});
 
+
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+        const { name, value } = e.target;
+        
+        // Convert to uppercase ONLY for 'state'
+        const processedValue = name === 'state' 
+          ? value.toUpperCase() 
+          : value;
+      
+        setFormData({ 
+          ...formData, 
+          [name]: processedValue 
+        });
+      };
 
     const handleOptionSelect = (field, value) => {
         setFormData({ ...formData, [field]: value });
@@ -90,7 +103,8 @@ export default function UserForm() {
                                     name="firstName"
                                     value={formData.firstName}
                                     onChange={handleChange}
-                                    style={{ ...inputStyle , padding:"0px" }}
+                                    placeholder='Michael'
+                                    style={{ ...inputStyle ,width:"287.5px", padding:"0px 0px 0px 10px"}}
 
                                 />
                                 {errors.firstName && <ErrorText text={errors.firstName} />}
@@ -101,7 +115,8 @@ export default function UserForm() {
                                     name="lastName"
                                     value={formData.lastName}
                                     onChange={handleChange}
-                                    style={{ ...inputStyle , padding:"0px"}}
+                                    placeholder='Jackson'
+                                    style={{ ...inputStyle , width:"287.5px", padding:"0px 0px 0px 10px"}}
                                 />
                                 {errors.lastName && <ErrorText text={errors.lastName} />}
                             </div>
@@ -116,6 +131,7 @@ export default function UserForm() {
                                 <OptionButton
                                     key={option}
                                     label={option}
+                                    
                                     selected={formData.useOfTobaco === option}
                                     onClick={() => handleOptionSelect('useOfTobaco', option)}
                                 />
@@ -127,15 +143,16 @@ export default function UserForm() {
                     {/* Gender */}
                     <div style={{ marginTop: "24px" }}>
                         <label style={{ fontSize: "16px" }}>Gender</label>
-                        <div style={{ display: "flex", gap: "12px", marginTop: "13px", color:"#A0A0A0"}}>
+                        <div style={{ display: "flex", gap: "12px", marginTop: "13px"}}>
                             {['Male', 'Female'].map((gender) => (
                                 <OptionButton
                                     key={gender}
                                     label={gender}
                                     selected={formData.gender === gender}
                                     onClick={() => handleOptionSelect('gender', gender)}
+                                    color="#A0A0A0"
                                     width="307.5px"
-                                    height="80px !important"
+                                    height="80px"
                                 />
                             ))}
                         </div>
@@ -151,7 +168,8 @@ export default function UserForm() {
                                     name="zip"
                                     value={formData.zip}
                                     onChange={handleChange}
-                                    style={{ ...inputStyle, padding:"0px" }}
+                                    placeholder='00000'
+                                    style={{ ...inputStyle,width:"287.5px", padding:"0px 0px 0px 10px"}}
                                 />
                                 {errors.zip && <ErrorText text={errors.zip} />}
                             </div>
@@ -161,7 +179,8 @@ export default function UserForm() {
                                     name="state"
                                     value={formData.state}
                                     onChange={handleChange}
-                                    style={{ ...inputStyle , padding:"0px"}}
+                                    placeholder='XX'
+                                    style={{ ...inputStyle , width:"287.5px", padding:"0px 0px 0px 10px"}}
                                 />
                                 {errors.state && <ErrorText text={errors.state} />}
                             </div>
@@ -169,17 +188,21 @@ export default function UserForm() {
                     </div>
 
                     {/* Age */}
-                    <div style={{ marginTop: "24px", width: "297.5px" }}>
+                    <div style={{ marginTop: "24px" }}>
+                    <div style={{ width: "297.5px" }}>
                         <label style={{ fontSize: "16px" }}>Age</label>
                         <input
                             name="age"
                             value={formData.age}
                             onChange={handleChange}
-                            style={{ ...inputStyle }}
+                            placeholder="00"
+                            style={{ ...inputStyle,width:"287.5px", padding:"0px 0px 0px 10px" }}
                         />
                         {errors.age && <ErrorText text={errors.age} />}
                     </div>
 
+                    </div>
+                    
                     {/* Submit Button */}
                     <button type="submit" style={{
                         marginTop: "45px",
@@ -208,7 +231,8 @@ const OptionButton = ({ label, selected, onClick, width = "149.25px" }) => (
             borderRadius: "4px",
             backgroundColor: selected ? "#e0e0e0" : "#f0f0f0",
             transition: "background 0.3s",
-            width,
+            color: selected ?  "#000000":"#A0A0A0",
+            width:"307.5px",
             height: "38px",
             display: "flex",
             alignItems: "center",
@@ -234,5 +258,5 @@ const inputStyle = {
     color: "#000000",
     height: "38px",
     width: "100%",
-    padding: "0 10px"
+    outline: "none",
 };

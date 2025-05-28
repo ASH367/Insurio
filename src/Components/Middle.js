@@ -3,6 +3,7 @@ import { ArrowUpIcon, Microphone, Paperclip } from "@phosphor-icons/react";
 import Frame5 from "../Images/Frame5.png";
 import axios from "axios";
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from "remark-gfm";
 import { AnimatePresence, motion } from 'framer-motion';
 
 const Middle = ({formData}) => {
@@ -16,6 +17,8 @@ const Middle = ({formData}) => {
   const [chatHistory, setChatHistory] = useState([]);
   const [inputFocused, setInputFocused] = useState(false);
   const [isGeneratingRecommendation, setIsGeneratingRecommendation] = useState(false);
+  const [systemContext, setSystemContext] = useState([]);
+
 
   const inputRef = useRef(null);
   const handleRecommendationClick = async () => {
@@ -35,7 +38,7 @@ const Middle = ({formData}) => {
         gender: formData.gender,
         uses_tobacco: formData.useOfTobaco === 'Daily user',
         zipcode: formData.zip,
-        state: formData.state,
+        state: formData.state.toUpperCase(),
         year: 2025,
         countyfips: "04013"
       };
@@ -49,13 +52,18 @@ const Middle = ({formData}) => {
       // Format the API response
       const recommendation = response.data.recommendation || 
         "No recommendations available at this time.";
-      const formattedRecommendation = <ReactMarkdown>{recommendation}</ReactMarkdown>;
+      const formattedRecommendation = <ReactMarkdown remarkPlugins={[remarkGfm]}>{recommendation}</ReactMarkdown>;
+      setSystemContext(response.data.context || []);
 
-      // Update chat history with recommendation
-      setChatHistory(prev => [
-        ...prev.slice(0, -1), // Remove loading message
-        { sender: "bot", text: formattedRecommendation }
+        setChatHistory(prev => [
+        ...prev.slice(0, -1),
+        { 
+          sender: "bot", 
+          text: formattedRecommendation,
+          raw:recommendation
+        }
       ]);
+      console.log(chatHistory)
 
     } catch (error) {
       setChatHistory(prev => [
@@ -74,21 +82,35 @@ const Middle = ({formData}) => {
     setLoading(true);
     
     // Create updated history before state update
-    const updatedHistory = [...chatHistory, { sender: "user", text: userMessage }];
+    const updatedHistory = [
+        ...chatHistory, 
+        { sender: "user", text: userMessage, raw: userMessage }
+      ];
     setChatHistory(updatedHistory);
     setMessage("");
     setInputFocused(false);
   
     try {
       // Prepare chat context - dynamically adjust based on message length
-      const chatContext = updatedHistory
-        .slice(-getOptimalContextLength(userMessage)) // Dynamic slicing
-        .map(msg => ({
-          role: msg.sender === "user" ? "user" : "assistant",
-          content: typeof msg.text === 'string' ? msg.text : 
-                   msg.text.props?.children || '' // Handle ReactMarkdown components
-        }))
-        .filter(msg => msg.content.trim().length > 0); // Remove empty messages
+      const chatContext = [];
+      let lastRole = null;
+      updatedHistory
+      .slice(-5) // Fixed context window
+      .forEach(msg => {
+        const role = msg.sender === "user" ? "user" : "assistant";
+        if (role !== lastRole) {
+          chatContext.push({
+            role,
+            content: msg.raw || // Use raw text when available
+              (typeof msg.text === 'string' ? msg.text : 
+               msg.text?.props?.children?.[0] || '')
+          });
+          lastRole = role;
+        }
+    });
+    if (chatContext.length > 0 && chatContext[chatContext.length-1].role === "user") {
+        chatContext.pop();
+      }
   
       const payload = {
         message: userMessage,
@@ -100,18 +122,23 @@ const Middle = ({formData}) => {
           gender: formData.gender,
           uses_tobacco: formData.useOfTobaco === 'Daily user',
           zipcode: formData.zip,
-          state: formData.state
+          state: formData.state.toUpperCase() 
         }
       };
   
       const res = await axios.post("https://insurance-backend-yuoj.onrender.com/chat-with-ai", payload);
   
       const botReply = res.data.reply || "No response received.";
-      const refined = <ReactMarkdown>{botReply}</ReactMarkdown>;
+      setChatHistory(prev => [
+        ...prev, 
+        { 
+          sender: "bot", 
+          text: <ReactMarkdown remarkPlugins={[remarkGfm]}>{botReply}</ReactMarkdown>,
+          raw: botReply // Store raw text for future context
+        }
+      ]);
       
       // Update with both user message and bot response
-      setChatHistory(prev => [...prev, { sender: "bot", text: refined }]);
-      setResponse(refined);
   
     } catch (error) {
       const errorMsg = error.response?.data?.error?.message || 
@@ -121,15 +148,6 @@ const Middle = ({formData}) => {
     } finally {
       setLoading(false);
     }
-  };
-  const getOptimalContextLength = (currentMessage) => {
-    const messageLength = currentMessage.length;
-    
-    if (messageLength > 500) return 0;    // Very long message - no context
-    if (messageLength > 300) return 1;    // Long message - 1 previous message
-    if (messageLength > 150) return 2;    // Medium message - 2 previous messages
-    if (messageLength > 50) return 3;     // Short message - 3 previous messages
-    return 4;                             // Very short message - 4 previous messages
   };
 
   const handleKeyDown = (e) => {
