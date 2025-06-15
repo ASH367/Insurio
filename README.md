@@ -51,18 +51,18 @@ git clone https://github.com/ASH367/insurance-assistant
 cd insurance-assistant
 npm install
 # or
-yarn install ```
+yarn install 
 
 ### Run the Application
-```npm start
+npm start
 # or
-yarn start```
+yarn start
 
 ### Build for Production
 
-```npm run build
+npm run build
 # or
-yarn build```
+yarn build
 
 ## 📄 License
 
