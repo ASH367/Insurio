@@ -1,69 +1,82 @@
 # Insurio - Frontend
 
-**Insurio** helps users find the right insurance faster and cleaner by combining real-time web search with personalized document understanding to provide fast and trusted answers.
+**Insurio** is an intelligent insurance assistant that helps users find tailored insurance plans faster. By combining real-time web search with personalized document analysis, Insurio delivers accurate, trusted recommendations.
 
 ## 📸 Demo
 
-[![Demo Video](https://img.youtube.com/vi/05jEwKGhr0w/0.jpg)](https://youtu.be/05jEwKGhr0w)
+[![Insurio Demo](https://img.youtube.com/vi/05jEwKGhr0w/0.jpg)](https://youtu.be/05jEwKGhr0w)
 
-## 🧠 About the Project
+## ✨ Key Features
 
-Users begin by entering their personal information (like name, age, income, and state) on the **Form Page**.
+- **Personalized Recommendations**: Get insurance suggestions based on your profile
+- **AI-Powered Chat**: Natural language queries about insurance
+- **Real-Time Data**: Integrated with Marketplace API for current plans
+- **Context-Aware**: Maintains conversation context using recent chat history
 
-Once submitted, the data is sent to the backend, and the user is taken to the **Chat Page**, where they can:
+## 🚀 User Flow
 
-- 💬 Ask questions related to insurance via the integrated AI
-- ✅ Click the **Recommend** button to receive a personalized insurance suggestion
-  - These are generated based on the user’s submitted information and location
-  - Plans are fetched using the **Marketplace API**
-  - The recommendation is enhanced using **Perplexity AI**
-- 🩺 Specifically query about **health insurance** to get reliable and real-time information
+1. **Form Page**:
+   - Users input personal details (name, age, income, state)
+   
+2. **Chat Interface**:
+   - 💬 Ask insurance-related questions via AI chat
+   - ✅ Click **Recommend** for personalized insurance suggestions
+     - Plans fetched via Marketplace API
+     - Enhanced with Perplexity AI for better relevance
+   - 🩺 Specialized health insurance queries with real-time data
 
-### 🗃️ Chat & Data Handling
+## ⚙️ System Architecture
 
-- User details are temporarily stored
-- Chat history is saved in **MongoDB**
-- Last 3 messages are used for session continuity
+- **Frontend**: React.js with TailwindCSS
+- **Data Persistence**:
+  - User details temporarily stored
+  - Chat history saved in MongoDB
+  - Last 3 messages maintain session context
+- **APIs**:
+  - Axios for backend communication
+  - Marketplace API for plan data
+  - Perplexity AI for recommendation enhancement
 
-## 🛠️ Tech Stack
+## 🛠️ Technology Stack
 
-- React.js
-- JavaScript (ES6+)
-- HTML5 & CSS3
-- TailwindCSS
-- MongoDB – stores chat history and user interactions
-- Axios – for backend/API communication
-- React Router – for navigation
+| Component        | Technology               |
+|------------------|--------------------------|
+| Frontend         | React.js, JavaScript ES6+|
+| Styling          | TailwindCSS              |
+| Routing          | React Router             |
+| State Management | Context API              |
+| API Handling     | Axios                    |
+| Database         | MongoDB                  |
 
 ## 🏁 Getting Started
 
 ### Prerequisites
 
-Make sure you have the following installed:
-
-- Node.js (v14 or later)
+- Node.js ≥ v14
 - npm or yarn
 
 ### Installation
 
 ```bash
+# Clone repository
 git clone https://github.com/ASH367/insurance-assistant
 cd insurance-assistant
+
+# Install dependencies
 npm install
 # or
-yarn install 
+yarn install
 
-### Run the Application
-npm start
-# or
-yarn start
+## 🚀 Quick Start
 
-### Build for Production
+```bash
+# Clone and install
+git clone https://github.com/ASH367/insurance-assistant
+cd insurance-assistant
+npm install  # or yarn install
 
-npm run build
-# or
-yarn build
+# Development
+npm start    # or yarn start
 
-## 📄 License
-
-This project is licensed under the [MIT License](LICENSE).
+# Production build
+npm run build  # or yarn build
