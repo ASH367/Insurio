@@ -9,18 +9,21 @@ import { getOrCreateSessionId } from "../../utils/session.js";
 function ChatPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const formData = location.state || {};
+  const formData = location.state ||JSON.parse(localStorage.getItem("userData") || {});
   const [middleKey, setMiddleKey] = React.useState(0);
   const [sessionId, setSessionId] = useState(null);
 
   useEffect(() => {
+    console.log(formData);
+    console.log("there");
+
+
     const id = getOrCreateSessionId();
     setSessionId(id);
-  }, []);
+  },[]);
 
   useEffect(() => {
-    if (!formData) {
-      // Redirect to form if no data is found (e.g. on page reload)
+    if (!formData || Object.keys(formData).length === 0) {
       navigate('/', { replace: true });
     }
   }, [formData, navigate]);

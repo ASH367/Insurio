@@ -52,6 +52,10 @@ const Middle = ({ formData, sessionId }) => {
       ]);
       saveMessageToHistory({ sender: "user", text: "Show me personalized recommendations" });
 
+      console.log(formData);
+      console.log("here");
+      
+      
       const payload = {
         income: 100000,
         age: parseInt(formData.age, 10),
