@@ -64,7 +64,7 @@ const Middle = ({ formData, sessionId }) => {
         sessionId: sessionId
       };
 
-      const response = await axios.post("http://localhost:8000/marketplace-plans", payload);
+      const response = await axios.post("https://insurio.onrender.com/marketplace-plans", payload);
       const { available, recommendation, message, link } = response.data;
       let finalRecommendation = available === false && link
         ? `${message}\n\nExplore plans at: ${link}`
@@ -132,7 +132,7 @@ const Middle = ({ formData, sessionId }) => {
         sessionId: sessionId
       };
 
-      const res = await axios.post("http://localhost:8000/chat-with-ai", payload);
+      const res = await axios.post("https://insurio.onrender.com/chat-with-ai", payload);
       const botReply = res.data.reply || "No response received.";
       setChatHistory(prev => [...prev, { sender: "bot", text: botReply, raw: botReply }]);
       saveMessageToHistory({ sender: "bot", text:botReply , raw: botReply });
