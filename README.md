@@ -80,3 +80,7 @@ npm start    # or yarn start
 
 # Production build
 npm run build  # or yarn build
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
