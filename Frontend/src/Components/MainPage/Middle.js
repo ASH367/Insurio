@@ -76,6 +76,7 @@ const Middle = ({ formData, sessionId }) => {
       ]);
       saveMessageToHistory({ sender: "bot", text: finalRecommendation, raw: recommendation });
     } catch (error) {
+      console.log("Error:" , error)
       setChatHistory(prev => [
         ...prev.slice(0, -1),
         { sender: "bot", text: "Failed to load recommendations. Please try again later." }
@@ -137,6 +138,7 @@ const Middle = ({ formData, sessionId }) => {
       setChatHistory(prev => [...prev, { sender: "bot", text: botReply, raw: botReply }]);
       saveMessageToHistory({ sender: "bot", text:botReply , raw: botReply });
     } catch (error) {
+      console.log("Api Error:", error)
       const errorMsg = error.response?.data?.error?.message || "Something went wrong. Please try again.";
       setChatHistory(prev => [...prev, { sender: "bot", text: errorMsg }]);
     } finally {
