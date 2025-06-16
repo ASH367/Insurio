@@ -56,9 +56,7 @@ app.post("/marketplace-plans", async (req, res) => {
     // Check for SBM state
     if (SBM_STATES[state]) {
       const staticMessage = `Heads up!  
-    Currently, we don’t support health insurance plan searches for ${state} on our platform. However, you can explore and compare plans directly on your state’s official health insurance marketplace website.  
-    
-    Visit the link below to find detailed information, available plans, subsidies, and special programs tailored for your state:\n\n${SBM_STATES[state]}`;
+    Currently, ${state} uses its own health insurance marketplace. We can’t pull plan data here. However, you can explore and compare plans directly on your state’s official health insurance marketplace website.`;
     
       let sessionPlan = await Session.findOne({ sessionId });
     
