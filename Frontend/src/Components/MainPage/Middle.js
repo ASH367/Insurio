@@ -68,7 +68,7 @@ const Middle = ({ formData, sessionId }) => {
         sessionId: sessionId
       };
 
-      const response = await axios.post("http://localhost:8000/marketplace-plans", payload);
+      const response = await axios.post("https://insurio.onrender.com/marketplace-plans", payload);
       const { available, recommendation, message, link } = response.data;
       let finalRecommendation = available === false && link
         ? `${message}\n\nExplore plans at: ${link}`
