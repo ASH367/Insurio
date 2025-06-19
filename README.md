@@ -69,17 +69,22 @@ yarn install
 
 ## 🚀 Quick Start
 
-```bash
 # Clone and install
+```
 git clone https://github.com/ASH367/insurance-assistant
 cd insurance-assistant
 npm install  # or yarn install
+```
 
 # Development
+```
 npm start    # or yarn start
+```
 
 # Production build
+```
 npm run build  # or yarn build
+```
 
 ## 📄 License
 
