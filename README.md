@@ -57,15 +57,20 @@
 
 ### Installation
 
-```bash
+```
 # Clone repository
 git clone https://github.com/ASH367/insurance-assistant
 cd insurance-assistant
+```
 
 # Install dependencies
+```
 npm install
+```
 # or
+```
 yarn install
+```
 
 ## 🚀 Quick Start
 
