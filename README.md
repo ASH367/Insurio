@@ -13,6 +13,12 @@
 - **Real-Time Data**: Integrated with Marketplace API for current plans
 - **Context-Aware**: Maintains conversation context using recent chat history
 
+## 🤝 Collaborators
+
+- [**Ashish Ubale**](https://github.com/ASH367)
+- [**Tabrez Mohammed**](https://github.com/Tabrez10XDev) 
+- [**Ishan Shah**](https://github.com/ishanshah001)
+
 ## 🚀 User Flow
 
 1. **Form Page**:
