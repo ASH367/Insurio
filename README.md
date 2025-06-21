@@ -15,9 +15,9 @@
 
 ## 🤝 Collaborators
 
-- **Ashish Ubale**  
-- **Tabrez Mohammed** 
-- **Ishan Shah**
+- [**Ashish Ubale**] (https://github.com/ASH367)
+- [**Tabrez Mohammed**] (https://github.com/Tabrez10XDev) 
+- [**Ishan Shah**] (https://github.com/ishanshah001)
 
 ## 🚀 User Flow
 
